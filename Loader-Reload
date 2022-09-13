@@ -4750,7 +4750,8 @@ end
 function AttackNoCD() 
     for i = 1,1 do
         local Combat = CbFw2.activeController
-        local bladehit = require(game.ReplicatedStorage.CombatFramework.RigLib).getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
+	local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
+        local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -4789,12 +4790,13 @@ function AttackNoCD()
     end
 end
 
-
 plrgetm.Button1Down:Connect(function()
     if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
         pcall(function()
-            CbFw2.activeController.increment = 1
-            CbFw2.activeController.hitboxMagnitude = 30
+            CbFw2.activeController.increment = 4
+            CbFw2.activeController.hitboxMagnitude = 40
+	    CbFw2.activeController.timeToNextAttack = 0
+	    CbFw2.activeController:attack()
             AttackNoCD()
         end)
     end
@@ -4804,18 +4806,25 @@ spawn(function()
     while wait(wat) do
         pcall(function()
             CSR:Stop()
-            CbFw2.activeController.increment = 3
-            CbFw2.activeController.hitboxMagnitude = 100
-            CbFw2.activeController.timeToNextAttack = 0
-            CbFw2.activeController.attacking = false
-            CbFw2.activeController.blocking = false
-            game.Players.LocalPlayer.Character.Humanoid.Sit = false
-            game.Players.LocalPlayer.Character.Stun.Value = 0
             if FTAK_1x == true and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+            	CbFw2.activeController.increment = 4
+            	CbFw2.activeController.hitboxMagnitude = 100
+            	CbFw2.activeController.timeToNextAttack = 0
+            	CbFw2.activeController.attacking = false
+            	CbFw2.activeController.blocking = false
+            	game.Players.LocalPlayer.Character.Humanoid.Sit = false
+            	game.Players.LocalPlayer.Character.Stun.Value = 0
                 (function()
                     AttackNoCD()
                 end)()
             elseif SF015 == true and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+            	CbFw2.activeController.increment = 4
+            	CbFw2.activeController.hitboxMagnitude = 100
+            	CbFw2.activeController.timeToNextAttack = 0
+            	CbFw2.activeController.attacking = false
+            	CbFw2.activeController.blocking = false
+            	game.Players.LocalPlayer.Character.Humanoid.Sit = false
+            	game.Players.LocalPlayer.Character.Stun.Value = 0
                 (function()
                     AttackNoCD()
                 end)()
