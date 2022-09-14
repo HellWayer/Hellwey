@@ -4451,11 +4451,11 @@ function CheckLevel()
 			CFrameMon = CFrame.new(65.77503967285156, 77.56488037109375, -12636.5615234375)
             elseif Lv >= 2375 or SelectMonster == "Candy Rebel [Lv. 2375]" then
 			Ms = "Candy Rebel [Lv. 2375]"
-			NameQuest = "CakeQuest2"
+			NameQuest = "ChocQuest2"
 			QuestLv = 2
 			NameMon = "Candy Rebel"
 			CFrameQ = CFrame.new(151.198, 24.8907, -12774.6)
-			CFrameMon = CFrame.new(-2287.00732421875, 103.9866943359375, -12822.05078125)
+			CFrameMon = CFrame.new(59.33293914794922, 64.40779876708984, -12892.9638671875)
 		end
 	end
 end
@@ -4795,8 +4795,8 @@ plrgetm.Button1Down:Connect(function()
         pcall(function()
             CbFw2.activeController.increment = 4
             CbFw2.activeController.hitboxMagnitude = 40
-	    CbFw2.activeController.timeToNextAttack = 0
-	    CbFw2.activeController:attack()
+	        CbFw2.activeController.timeToNextAttack = 0
+	        CbFw2.activeController:attack()
             AttackNoCD()
         end)
     end
