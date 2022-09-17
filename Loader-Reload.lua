@@ -20,8 +20,6 @@ elseif placeId == 7449423635 then
 	ThreeWorld = true
 end
 
-wait(1)
-
 local UserInputService = game:GetService("UserInputService");
 local TweenService = game:GetService("TweenService");
 local RunService = game:GetService("RunService");
@@ -3571,7 +3569,7 @@ OMF.MouseButton1Down:Connect(
         LabelFarm2.Parent = LabelFrame
         LabelFarm2.Name = "TextLabel_Tap"
         LabelFarm2.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        LabelFarm2.Size =UDim2.new(0, 130, 0,24 )
+        LabelFarm2.Size = UDim2.new(0, 130, 0,24 )
         LabelFarm2.Font = Enum.Font.SourceSansSemibold
         LabelFarm2.Text = text
         LabelFarm2.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -3642,7 +3640,11 @@ end
 return top
 end
 
---create:Notifile("LocalScript","Script Has Started",5)
+wait(1)
+
+pcall(function()
+    create:Notifile("LocalScript","Script Has Started",5)
+end)
 
 Wapon = {}
 for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
@@ -3652,7 +3654,7 @@ for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 end
 for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do  
     if v:IsA("Tool") then
-    table.insert(Wapon, v.Name)
+        table.insert(Wapon, v.Name)
     end
 end
 
@@ -3756,7 +3758,13 @@ page2:Toggle("Auto Rejoin", Auto_Join_With_Roblox_Prompt, function(a2)
     Auto_Join_With_Roblox_Prompt = a2
 end)
 
-page2:Drop("Delay FastAttack time", false, {-1.0,0.0,0.1,0.15},function(Value)
+pcall(function()
+    if wat == nil or 0 or "" then
+        wat = 0.15
+    end
+end)
+
+page2:Drop("Delay FastAttack ", false, {0,0.05,0.1,0.15}, function(Value)
     wat = Value
 end)
 
@@ -3827,22 +3835,32 @@ page2:Button("Refresh Weapon",function()
 end)
 
 page2:Label("Function More",0);
+if ThreeWorld or NewWorld then
+    page2:Toggle("Auto Kill 500 Mob", false, function(auto)
+        a1 = auto
+        if a1 and SelectToolWeapon == nil then
+            create:Notifile("Farm","Select Weapon",5)
+        else
+            TP(CFrame.new(-1927.83056640625, 38.360443115234375, -12842.0908203125))
+            AutoHaki = auto 
+            atoMoB = auto
+            if auto == false then
+                wait(.5)
+                TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,50,0))
+            end
+        end
+    end)
+end
 
-page2:Toggle("Auto Kill 500 Mob", false, function(auto)
-    atoMoB = auto
-    if auto == false then
-        wait(.5)
-        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
-    end
-end)
-
-page2:Toggle("Auto NewWorld", false, function(auto)
-    AutoNew = auto
-    if auto == false then
-        wait(.5)
-        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
-    end
-end)
+if not ThreeWorld or NewWorld then
+    page2:Toggle("Auto NewWorld", false, function(auto)
+        AutoNew = auto
+        if auto == false then
+            wait(.5)
+            TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+        end
+    end)
+end
 
 page2:Toggle("Auto Buy Abilities", false, function(t)
     while t do wait()
@@ -3851,6 +3869,7 @@ page2:Toggle("Auto Buy Abilities", false, function(t)
 		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
     end
 end)
+
 local Tap2 = ui:Taps("Stats")
 local page3 = Tap2:newpage()
 page3:Label("Set Stats", 0)
@@ -3910,30 +3929,97 @@ page5:Toggle("Auto DeathStep", false, function(p1)
 end)
 
 local page6 = Tap3:newpage()
-page6:Label("Function Attack",0)
+page6:Label("Function TP",0)
+
+if OldWorld then
+    ReTP = {
+        "Jones Salad",
+        "Marine1",
+        "Marine2",
+        "Midle Town",
+        "Jungle",
+        "Pirate Village",
+        "Desert",
+        "Frozen Village",
+        "Colosseum",
+        "Prison",
+        "Mob Leader",
+        "Magma Village",
+        "UnderWater Gate",
+        "UnderWater City",
+        "Fountain City",
+        "Sky1",
+        "Sky2",
+        "Sky3"
+    }
+elseif NewWorld then
+    ReTP = {
+        "Dock",
+        "Mansion",
+        "Kingdom Of Rose",
+        "Cafe",
+        "Sunflower Field",
+        "Jeramy Mountain",
+        "Colossuem",
+        "Factory",
+        "The Bridge",
+        "Green Bit",
+        "Graveyard",
+        "Dark Area",
+        "Snow Mountain",
+        "Hot Island",
+        "Cold Island",
+        "Ice Castle",
+        "Usopp's Island",
+        "inscription Island",
+        "Forgotten Island",
+        "Ghost Ship",
+    }
+elseif ThreeWorld then
+    ReTP = {
+        "Port Town",
+        "Hydra Island",
+        "Gaint Tree",
+        "Mansion",
+        "Castle on the Sea",
+        "Graveyard Island",
+        "Icecream Island",
+        "Peanut Island",
+        "Lab"
+    }
+end
+
+page6:Button("Start TP", function()
+    tTp = true
+    Noclip = true
+end)
+
+page6:Button("Stop TP", function()
+    tTp = false
+    Noclip = false
+    wait(.5)
+    TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+end)
+
+local TPdrop = page6:Drop("Select Teleport", false, ReTP,function(Value)
+    TweenNameMap = Value
+end)
 
 function TP(CFgo)
-    Noclip = true
-    local tweenfunc = {}
-        if (game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude <= 150 then
-            pcall(function()
-                repeat
-                    game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position = CFgo
-                until false
-                return
-            end)
-        end
-        local CP = game:GetService("Players").LocalPlayer.Character
-        local LPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
-        local tween_s = game:service"TweenService"
-        local LP = game.Players.LocalPlayer
-        local tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/320, Enum.EasingStyle.Linear), {CFrame = CFgo})
-        tween:Play()
-        Noclip = false 
-        if not tween then 
-        return tween 
+    if (CFgo.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 150 then
+        pcall(function()
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Position = CFgo
+        end)
     end
-    return tweenfunc
+    local CP = game:GetService("Players").LocalPlayer.Character
+    local LPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
+    local tween_s = game:service"TweenService"
+    local LP = game.Players.LocalPlayer
+    local tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/300, Enum.EasingStyle.Linear), {CFrame = CFgo})
+    tween:Play()
+    if not tween then
+        return tween
+    end
 end
 
 spawn(function()
@@ -4407,11 +4493,11 @@ function CheckLevel()
 			NameMon = "Cookie Crafter"
 			CFrameQ = CFrame.new(-2022.6387939453125, 38.1414680480957, -12027.939453125)
 			CFrameMon = CFrame.new(-2301.03125, 112.88335418701172, -12206.984375)
-		elseif Lv == 2225 or Lv <= 2250 or SelectMonster == "Cookie Guard [Lv. 2225]" then
-			Ms = "Cookie Guard [Lv. 2225]"
+		elseif Lv == 2225 or Lv <= 2250 or SelectMonster == "Cake Guard [Lv. 2225]" then
+			Ms = "Cake Guard [Lv. 2225]"
 			NameQuest = "CakeQuest1"
 			QuestLv = 2
-			NameMon = "Cookie Guard"
+			NameMon = "Cake Guard"
 			CFrameQ = CFrame.new(-2022.6387939453125, 38.1414680480957, -12027.939453125)
 			CFrameMon = CFrame.new(-1602.900146484375, 196.0018310546875, -12376.7861328125)
 		elseif Lv == 2250 or Lv <= 2275 or SelectMonster == "Baking Staff [Lv. 2250]" then
@@ -4462,7 +4548,7 @@ end
 
 spawn(function()
 	game:GetService("RunService").Heartbeat:connect(function()
-		if Auto_Farm or AutoNew then
+		if Auto_Farm or AutoNew or Noclip then
 			for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
 				if v.Name == Ms and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
 					v.Humanoid:ChangeState(11)
@@ -4480,14 +4566,6 @@ function EquipWeapon(ToolSe)
 end
 
 spawn(function()
-    while wait(1) do
-        if _G.SetSpawn then
-            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
-        end
-    end
-end)
-
-spawn(function()
     while wait() do
         if Auto_Farm then
             pcall(function()
@@ -4500,6 +4578,16 @@ spawn(function()
                 end
             end)
         end
+    end
+end)
+ 
+local inputkeyboard = game:GetService('UserInputService') 
+inputkeyboard.InputBegan:Connect(function(input) 
+    if input.KeyCode == Enum.KeyCode.G then
+        tTp = false
+        Noclip = false
+        wait(.5)
+        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
     end
 end)
 
@@ -4622,6 +4710,10 @@ function autofarm2()
                 MagnetActive = false
             end
         end)
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Visible == true then
+        repeat game:GetService("RunService").Heartbeat:wait()
+            TP(CFrameMon * CFrame.new(0,500,0))
+        until game:GetService("Players").LocalPlayer.PlayerGui.Main.InCombat.Visible == false
     end
 end
 
@@ -4667,31 +4759,76 @@ if OldWorld then
         end
     end
 end
+-- 1 -2226.81982421875, 53.53757858276367, -12858.2705078125
+-- 2 -1874.0467529296875, 37.83319854736328, -12941.5166015625
+-- 3 -1590.4227294921875, 37.83308792114258, -12379.3876953125
+-- 4 -2353.299072265625, 37.83314895629883, -12108.23046875
+--[[function checkMob500()
+    pcall(function()
+        local randomMob = math.random(0,3)
+        if randomMob == 0 then
+            atoMB = "Head Baker [Lv. 2275]"
+            Ato500 = CFrame.new(-2226.81982421875, 53.53757858276367, -12858.2705078125)
+        elseif randomMob == 1 then
+            atoMB = "Baking Staff [Lv. 2250]"
+            Ato500 = CFrame.new(-1874.0467529296875, 37.83319854736328, -12941.5166015625)
+        elseif randomMob == 2 then
+            atoMB = "Cookie Guard [Lv. 2225]"
+            Ato500 = CFrame.new(-1590.4227294921875, 37.83308792114258, -12379.3876953125)
+        elseif randomMob == 3 then
+            atoMB = "Cookie Crafter [Lv. 2200]"
+            Ato500 = CFrame.new(-2353.299072265625, 37.83314895629883, -12108.23046875)
+        end
+    end)
+end]]
 
 spawn(function()
-    while wait(.1) do
-        if atoMoB then
-            if atoMoB then
-                if game:GetService("Workspace").Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game:GetService("Workspace").Enemies:FindFirstChild("Cookie Guard [Lv. 2225]") or game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]") then
-                    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                        if v.Name == "Head Baker [Lv. 2275]" or v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Cookie Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]" and v.Humanoid.Health > 0 then
-                            repeat game:GetService("RunService").Heartbeat:wait()
-                                pcall(function()
-                                    EquipWeapon(SelectToolWeapon)
-                                    TP(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
-                                    PosMS = v.HumanoidRootPart.CFrame
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
-                                    FTAK_1x = true
-                                    MagnetActive = true
-                                end)
-                            until v.Humanoid.Health <= 0 or not v.Parent
-                        else
-                            TP(PosMS * CFrame.new(0,200,0))
-                        end
-                    end
-                end
+    while wait(5) do
+        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if v.Name == "Head Baker [Lv. 2275]" and v:WaitForChild("Humanoid").Health > 0 then
+                atoMB = "Head Baker [Lv. 2275]"
+                Ato500 = CFrame.new(-2287.00732421875, 103.9866943359375, -12822.05078125)
+            elseif v.Name == "Baking Staff [Lv. 2250]" and v:WaitForChild("Humanoid").Health > 0 then
+                atoMB = "Baking Staff [Lv. 2250]"
+                Ato500 = CFrame.new(-1874.0467529296875, 37.83319854736328, -12941.5166015625)
+            elseif v.Name == "Cakew Guard [Lv. 2225]" and v:WaitForChild("Humanoid").Health > 0 then
+                atoMB = "Cake Guard [Lv. 2225]"
+                Ato500 = CFrame.new(-1590.4227294921875, 37.83308792114258, -12379.3876953125)
+            elseif v.Name == "Cookie Crafter [Lv. 2200]" and v:WaitForChild("Humanoid").Health > 0 then
+                atoMB = "Cookie Crafter [Lv. 2200]"
+                Ato500 = CFrame.new(-2353.299072265625, 37.83314895629883, -12108.23046875)
             end
         end
+    end
+end)
+-- or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game:GetService("Workspace").Enemies:FindFirstChild("Cookie Guard [Lv. 2225]") or game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")  
+--or v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Cookie Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]"
+spawn(function()
+    while wait(.1) do
+        pcall(function()
+            if atoMoB then
+                if game:GetService("Workspace").Enemies:FindFirstChild(atoMB)then
+                    for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                        if v.Name == atoMB then
+                            if v:WaitForChild("Humanoid").Health > 0 then
+                                repeat game:GetService("RunService").Heartbeat:wait()
+                                    pcall(function()
+                                        TP(Ato500 * CFrame.new(0,30,0))
+                                        EquipWeapon(SelectToolWeapon)
+                                        FTAK_1x = true
+                                        MagnetActive = true
+                                    end)
+                                until atoMoB == false or v.Humanoid.Health <= 0 or not v.Parent
+                            end
+                        end
+                    end
+                else
+                    TP(CFrame.new(-2098.639404296875, 223.8921356201172, -12464.45703125 * CFrame.new(0,50,0)))
+                    FTAK_1x = false
+                    MagnetActive = false
+                end
+            end
+        end)
     end
 end)
 
@@ -4724,10 +4861,141 @@ spawn(function()
                             end)
                         end
                     end
+                elseif atoMoB and MagnetActive then
+                    if v.Name == atoMB and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - Ato500.Position).Magnitude <= 400 then
+                            pcall(function()
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.CFrame = Ato500
+                                if v.Humanoid:FindFirstChild("Animator") and MagnetActive then
+                                    sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 950)
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 600)
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                            end)
+                        end
+                    end
                 end
             end
         end)
     end)
+end)
+
+function tweenTP()
+    if tTp then
+        if OldWorld then
+            if TweenNameMap == "Jones Salad" then
+                TP(CFrame.new(1042.1501464844, 16.299360275269, 1444.3442382813))
+            elseif TweenNameMap == "Marine1" then
+                TP(CFrame.new(-2599.6655273438, 6.9146227836609, 2062.2216796875))
+            elseif TweenNameMap == "Marine2" then
+                TP(CFrame.new(-5081.3452148438, 85.221641540527, 4257.3588867188))
+            elseif TweenNameMap == "Midle Town" then
+                TP(CFrame.new(-655.97088623047, 7.878026008606, 1573.7612304688))
+            elseif TweenNameMap == "Jungle" then
+                TP(CFrame.new(-1499.9877929688, 22.877912521362, 353.87060546875))
+            elseif TweenNameMap == "Pirate Village" then
+                TP(CFrame.new(-1163.3889160156, 44.777843475342, 3842.8276367188))
+            elseif TweenNameMap == "Desert" then
+                TP(CFrame.new(954.02056884766, 6.6275520324707, 4262.611328125))
+            elseif TweenNameMap ==  "Frozen Village" then
+                TP(CFrame.new(1144.5270996094, 7.3292083740234, -1164.7322998047))
+            elseif TweenNameMap == "Colosseum" then
+                TP(CFrame.new(-1667.5869140625, 39.385631561279, -3135.5817871094))
+            elseif TweenNameMap == "Prison" then
+                TP(CFrame.new(4857.6982421875, 5.6780304908752, 732.75750732422))
+            elseif TweenNameMap ==  "Mob Leader" then
+                TP(CFrame.new(-2841.9604492188, 7.3560485839844, 5318.1040039063))
+            elseif TweenNameMap == "Magma Village" then
+                TP(CFrame.new(-5328.8740234375, 8.6164798736572, 8427.3994140625))
+            elseif TweenNameMap == "UnderWater Gate" then
+                TP(CFrame.new(3893.953125, 5.3989524841309, -1893.4851074219))
+            elseif TweenNameMap == "UnderWater City" then
+                TP(CFrame.new(61191.12109375, 18.497436523438, 1561.8873291016))
+            elseif TweenNameMap == "Fountain City" then
+                TP(CFrame.new(5244.7133789063, 38.526943206787, 4073.4987792969))
+            elseif TweenNameMap == "Sky1" then
+                TP(CFrame.new(-4878.0415039063, 717.71246337891, -2637.7294921875))
+            elseif TweenNameMap == "Sky2" then
+                TP(CFrame.new(-7899.6157226563, 5545.6030273438, -422.21798706055))
+            elseif TweenNameMap == "Sky3" then
+                TP(CFrame.new(-7868.5288085938, 5638.205078125, -1482.5548095703))
+            end
+        elseif NewWorld then
+            if TweenNameMap == "Dock" then
+                TP(CFrame.new(-12.519311904907, 19.302536010742, 2827.853515625))
+            elseif TweenNameMap == "Mansion" then
+                TP(CFrame.new(-390.34829711914, 321.89730834961, 869.00506591797))
+            elseif TweenNameMap == "Kingdom Of Rose" then
+                TP(CFrame.new(-388.29895019531, 138.35575866699, 1132.1662597656))
+            elseif TweenNameMap == "Cafe" then
+                TP(CFrame.new(-379.70889282227, 73.0458984375, 304.84692382813))
+            elseif TweenNameMap == "Sunflower Field" then
+                TP(CFrame.new(-1576.7171630859, 198.61849975586, 13.725157737732))
+            elseif TweenNameMap == "Jeramy Mountain" then
+                TP(CFrame.new(1986.3519287109, 448.95678710938, 796.70239257813))
+            elseif TweenNameMap == "Colossuem" then
+                TP(CFrame.new(-1871.8974609375, 45.820514678955, 1359.6843261719))
+            elseif TweenNameMap == "Factory" then
+                TP(CFrame.new(349.53750610352, 74.446998596191, -355.62420654297))
+            elseif TweenNameMap == "The Bridge" then
+                TP(CFrame.new(-1860.6354980469, 88.384948730469, -1859.1593017578))
+            elseif TweenNameMap == "Green Bit" then
+                TP(CFrame.new(-2202.3706054688, 73.097663879395, -2819.2687988281))
+            elseif TweenNameMap == "Graveyard" then
+                TP(CFrame.new(-5617.5927734375, 492.22183227539, -778.3017578125))
+            elseif TweenNameMap == "Dark Area" then
+                TP(CFrame.new(3464.7700195313, 13.375151634216, -3368.90234375))
+            elseif TweenNameMap == "Snow Mountain" then
+                TP(CFrame.new(561.23834228516, 401.44781494141, -5297.14453125))
+            elseif TweenNameMap == "Hot Island" then
+                TP(CFrame.new(-5505.9633789063, 15.977565765381, -5366.6123046875))
+            elseif TweenNameMap == "Cold Island" then
+                TP(CFrame.new(-5924.716796875, 15.977565765381, -4996.427734375))
+            elseif TweenNameMap == "Ice Castle" then
+                TP(CFrame.new(6111.7109375, 294.41259765625, -6716.4829101563))
+            elseif TweenNameMap == "Usopp's Island" then
+                TP(CFrame.new(4760.4985351563, 8.3444719314575, 2849.2426757813))
+            elseif TweenNameMap == "inscription Island" then
+                TP(CFrame.new(-5099.01171875, 98.241539001465, 2424.4035644531))
+            elseif TweenNameMap == "Forgotten Island" then
+                TP(CFrame.new(-3051.9514160156, 238.87203979492, -10250.807617188))
+            elseif TweenNameMap == "Ghost Ship" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+            end
+        elseif ThreeWorld then
+            if TweenNameMap == "Port Town" then
+                TP(CFrame.new(-275.21615600586, 43.755737304688, 5451.0659179688))
+            elseif TweenNameMap == "Hydra Island" then
+                TP(CFrame.new(5541.2685546875, 668.30456542969, 195.48069763184))
+            elseif TweenNameMap == "Gaint Tree" then
+                TP(CFrame.new(2276.0859375, 25.87850189209, -6493.03125))
+            elseif TweenNameMap == "Mansion" then
+                TP(CFrame.new(-12548.998046875, 332.40396118164, -7603.1865234375))
+            elseif TweenNameMap == "Castle on the Sea" then
+                TP(CFrame.new(-5498.0458984375, 313.79473876953, -2860.6022949219))
+            elseif TweenNameMap == "Graveyard Island" then
+                TP(CFrame.new(-9515.07324, 142.130615, 5537.58398))
+            elseif TweenNameMap == "Icecream Island" then
+                TP(CFrame.new(-880.894531, 118.245354, -11030.7607))
+            elseif TweenNameMap == "Peanut Island" then
+                TP(CFrame.new(-2124.06738, 44.0723495, -10179.8281))
+            elseif TweenNameMap == "Lab" then
+                TP(CFrame.new(-5057.146484375, 314.54132080078, -2934.7995605469))
+            end
+        end
+    end
+end
+
+spawn(function()
+    while wait() do
+        pcall(function()
+            if tTp then
+                tweenTP()
+            end
+        end)
+    end
 end)
 
 local plrgetm = game.Players.LocalPlayer:GetMouse()
@@ -4750,7 +5018,7 @@ end
 function AttackNoCD() 
     for i = 1,1 do
         local Combat = CbFw2.activeController
-	local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
+        local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
         local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
         local cac = {}
         local hash = {}
@@ -4982,7 +5250,7 @@ end)
 spawn(function()
     pcall(function()
         while task.wait() do
-            if Auto_Farm then
+            if tTp or atoMoB or Auto_Farm then
                 if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                     local BodyV = Instance.new("BodyVelocity")
                     BodyV.Name = "BodyClip"
@@ -4999,8 +5267,29 @@ spawn(function()
     end)
 end)
 
+spawn(function()
+    while task.wait() do
+        if tTp or atoMoB or Auto_Farm then
+            if not game:GetService("Workspace"):FindFirstChild("LOL") then
+                local LOL = Instance.new("Part", game.Workspace)
+                LOL.Name = "LOL"
+                LOL.Parent = game.Workspace
+                LOL.Anchored = true
+                LOL.Transparency = 0
+                LOL.Size = Vector3.new(12,0.8,12)
+            elseif game:GetService("Workspace"):FindFirstChild("LOL") then
+                game.Workspace["LOL"].CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, -3.8, 0)
+            end
+        else
+            if game:GetService("Workspace"):FindFirstChild("LOL") then
+                game:GetService("Workspace"):FindFirstChild("LOL"):Destroy()
+            end
+        end
+    end
+end)
+
 game:GetService("RunService").Stepped:Connect(function()
-    if Auto_Farm then
+    if tTp or atoMoB or Auto_Farm then
         for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.CanCollide = false    
