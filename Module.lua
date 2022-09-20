@@ -3874,12 +3874,15 @@ if ThreeWorld or NewWorld then
             create:Notifile("Farm","Select Weapon",5)
         else            
             if auto == false then
+		 wait(0.5)
                 FTAK_1Ato = false
                 TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
             end
             if auto == true then
+		 wait(0.5)
                 TP(CFrame.new(-1927.83056640625, 38.360443115234375, -12842.0908203125))
             end
+	    wait(0.5)
             _G.Magnet = auto
             AutoHaki = auto 
             atoMoB = auto
@@ -4045,6 +4048,7 @@ page6:Toggle("Teleport", false, function(v)
     if v == true then
         tTp = true
     elseif v == false then
+	wait(0.5)
         tTp = false
         TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
     end
@@ -4067,6 +4071,7 @@ page6:Toggle("Teleport Player", false, function(v)
     Noclip = true
     TP(game:GetService("Players"):FindFirstChild(Player_Select).Character.HumanoidRootPart.Position)
     elseif v == false then
+        wait(0.5)
         tTp = false
         Noclip = false
         TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
