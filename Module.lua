@@ -3658,23 +3658,27 @@ for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
     end
 end
 
+
+
 function TP(CFgo)
-    if (CFgo.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 150 then
-        pcall(function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.Position = CFgo
-        end)
-    end
-    local CP = game:GetService("Players").LocalPlayer.Character
-    local LPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
-    local tween_s = game:service"TweenService"
-    local LP = game.Players.LocalPlayer
-    local tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/320, Enum.EasingStyle.Linear), {CFrame = CFgo})
+    if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+        if (game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude < 150 then
+            pcall(function()
+                game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.CFrame = CFgo
+                return
+            end)
+        end
+        local CP = game:GetService("Players").LocalPlayer.Character
+        local LPos = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position
+        local tween_s = game:service"TweenService"
+        local LP = game.Players.LocalPlayer
+        local tween = tween_s:Create(game.Players.LocalPlayer.Character["HumanoidRootPart"], TweenInfo.new((game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude/320, Enum.EasingStyle.Linear), {CFrame = CFgo})
         tween:Play()
-    if not tween then
-        return tween
+        if not tween then
+            return tween
+        end
     end
 end
-
 -------UI System---------
 local ui = create:Win("Secret Hub ( ViP )")
 local Tap1 = ui:Taps("Auto Farm")
@@ -3781,11 +3785,17 @@ pcall(function()
     end
 end)
 
+pcall(function()
+    if hitboxUp == nil or 0 or "" then
+        hitboxUp = 60
+    end
+end)
+
 page2:Drop("Delay FastAttack ", false, {-0,0.05,0.1,0.15,0.20,0.25}, function(Value)
     wat = Value
 end)
 
-page2:Drop("Hitbox ", false, {30,60,120}, function(Value)
+page2:Drop("Hitbox ", false, {30, 60}, function(Value)
     hitboxUp = Value
 end)
 
@@ -4025,23 +4035,58 @@ page6:Line()
 
 page6:Bind("Key Stop TP", Enum.KeyCode.G, function()
     tTp = false
-    Noclip = false
     wait(.5)
     TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
 end)
 
 page6:Line()
 
-page6:Button("Start TP", function()
-    tTp = true
-    Noclip = true
+page6:Toggle("Teleport", false, function(v)
+    if v == true then
+        tTp = true
+    elseif v == false then
+        tTp = false
+        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+    end
 end)
 
-page6:Button("Stop TP", function()
-    tTp = false
-    Noclip = false
-    wait(.5)
-    TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+page6:Line()
+
+Player_name = {}
+for i,v in pairs(game.Players:GetChildren()) do  
+    table.insert(Player_name ,v.Name)
+end
+
+local TPPlayer = page6:Drop("Select Player", false, Player_name, function(bool)
+    Player_Select = bool
+end)
+
+page6:Toggle("Teleport Player", false, function(v)
+    if v == true then
+    tTp = true
+    Noclip = true
+    TP(game:GetService("Players"):FindFirstChild(Player_Select).Character.HumanoidRootPart.Position)
+    elseif v == false then
+        tTp = false
+        Noclip = false
+        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+    end
+end)
+
+spawn(function()
+    while wait(1) do
+        print("No.1 Fastattack")
+    end
+end)
+
+page6:Button("Refresh Player", function()
+    Player_name = {}
+    TPPlayer:Clear()
+    for i,v in pairs(game.Players:GetChildren()) do
+		if v.Name ~= game.Players.LocalPlayer.Name then
+	        TPPlayer:Add(v.Name)
+		end
+    end
 end)
 
 local Tap4 = ui:Taps("Store")
@@ -4878,9 +4923,9 @@ spawn(function()
                                         v.Humanoid:ChangeState(11)
                                         v.Head.CanCollide = false
                                         Ato500 = v.HumanoidRootPart.CFrame
-                                        TP(Ato500 * CFrame.new(0,30,0))
+                                        TP(Ato500 * CFrame.new(0,30,1))
                                         EquipWeapon(SelectToolWeapon)
-                                        FTAK_1Ato = true
+                                        FTAK_1x = true
                                         MagnetActive = true
                                     end)
                                 until atoMoB == false or v.Humanoid.Health <= 0 or not v.Parent
@@ -4889,7 +4934,7 @@ spawn(function()
                     end
                 else
                     TP(CFrame.new(-2098.639404296875, 223.8921356201172, -12464.45703125))
-                    FTAK_1Ato = false
+                    FTAK_1x = false
                     MagnetActive = false
                 end
             end
@@ -4951,7 +4996,7 @@ spawn(function()
 end)
 
 spawn(function()
-    game:GetService("RunService").Heartbeat:connect(function()
+    while wait(1) do
         pcall(function()
             for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
                 if _G.Magnet and MagnetActive then
@@ -4974,7 +5019,7 @@ spawn(function()
                 end
             end
         end)
-    end)
+    end
 end)
 
 function tweenTP()
@@ -5116,7 +5161,7 @@ function AttackNoCD()
     for i = 1,1 do
         local Combat = CbFw2.activeController
         local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
-        local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, 60)
+        local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, hitboxUp)
         local cac = {}
         local hash = {}
         for k, v in pairs(bladehit) do
@@ -5183,23 +5228,6 @@ spawn(function()
                 end)()
             elseif Auto_Farm == false and FTAK_1x == true or FTAK_1Ato == true then
                 FTAK_1x = false
-            end
-        end)
-    end
-end)
-
-spawn(function()
-    while wait(wat) do
-        pcall(function()
-            if FTAK_1Ato then
-            	CbFw2.activeController.attacking = false
-            	CbFw2.activeController.blocking = false
-            	game.Players.LocalPlayer.Character.Humanoid.Sit = false
-            	game.Players.LocalPlayer.Character.Stun.Value = 0
-                game:GetService("VirtualUser"):ClickButton1(Vector2.new(1200,720))
-            end
-            if atoMoB == false and FTAK_1Ato == true then
-                FTAK_1Ato = false
             end
         end)
     end
@@ -5457,6 +5485,15 @@ if _G.BoostFPS then
         end
     end
 end
+
+--[[local sound1 = Instance.new("Sound")
+sound1.Name = "Sound"
+sound1.SoundId = "http://www.roblox.com/asset/?id=HiIdHerePleaseThanks"
+sound1.Volume = 2
+sound1.Looped = true
+sound1.archivable = false
+sound1.Parent = game.Workspace
+sound1:Play()]]
 
 local vu = game:GetService("VirtualUser")
 game:GetService("Players").LocalPlayer.Idled:connect(function()
