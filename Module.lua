@@ -3678,7 +3678,7 @@ function TP(CFgo)
     end
 end
 -------UI System---------
-local ui = create:Win("Locker Hub ( ViP )")
+local ui = create:Win("Locker Hub ( ViP ) By zᴉzɐɔɐǝsɐɹ#4134")
 local Tap1 = ui:Taps("Auto Farm")
 local page1 = Tap1:newpage()
 
