@@ -5162,7 +5162,6 @@ function GetCurrentBlade()
 end
 
 function AttackNoCD() 
-    for i = 1,1 do
         local Combat = CbFw2.activeController
         local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
         local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, hitboxUp)
@@ -5201,7 +5200,6 @@ function AttackNoCD()
                 game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "") 
             end
         end
-    end
 end
 
 plrgetm.Button1Down:Connect(function()
@@ -5209,7 +5207,7 @@ plrgetm.Button1Down:Connect(function()
         pcall(function()
             CbFw2.activeController.increment = 4
             CbFw2.activeController.hitboxMagnitude = hitboxUp
-	        CbFw2.activeController.timeToNextAttack = 0
+	    CbFw2.activeController.timeToNextAttack = 0
             AttackNoCD()
         end)
     end
@@ -5228,7 +5226,7 @@ spawn(function()
             	game.Players.LocalPlayer.Character.Humanoid.Sit = false
             	game.Players.LocalPlayer.Character.Stun.Value = 0
                 (function()
-                    AttackNoCD()
+                    CbFw2.activeController:attack()
                 end)()
             elseif Auto_Farm == false and FTAK_1x == true or FTAK_1Ato == true then
                 FTAK_1x = false
