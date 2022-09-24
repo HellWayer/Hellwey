@@ -3658,8 +3658,6 @@ for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
     end
 end
 
-
-
 function TP(CFgo)
     if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
         if (game:GetService("Players")["LocalPlayer"].Character.HumanoidRootPart.Position - CFgo.Position).Magnitude < 150 then
@@ -3792,7 +3790,7 @@ pcall(function()
     end
 end)
 
-page2:Drop("Delay FastAttack ", false, {-0,0.05,0.1,0.15,0.20,0.25}, function(Value)
+page2:Drop("Delay FastAttack ", false, {0,0.05,0.1,0.15,0.20,0.25}, function(Value)
     wat = Value
 end)
 
@@ -3800,6 +3798,15 @@ page2:Drop("Hitbox ", false, {30, 60}, function(Value)
     hitboxUp = Value
 end)
 
+stayattack = true
+page2:Toggle("StayAttack ", stayattack, function(Value)
+    stayattack = Value
+end)
+
+getgenv().Fastattack = false
+page2:Toggle("Fast Attack ( Idled )", getgenv().Fastattack, function(a2)
+    getgenv().Fastattack = a2
+end)
 
 SF015 = false
 page2:Toggle("Fast Attack", SF015, function(a2)
@@ -3821,6 +3828,7 @@ page2:Toggle("Auto Farm Lv", false, function(auto)
         Auto_Farm = auto
         if auto == false then
             wait(0.5)
+            FTAK_1x = false
             AutoReMob = true
             TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
         end
@@ -3842,6 +3850,7 @@ page2:Toggle("Auto Kaiton", false, function(auto)
         autobuya = auto
         if auto == false then
             wait(0.5)
+            FTAK_1x = false
             AutoReMob = true
             TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
         end
@@ -3876,6 +3885,7 @@ if ThreeWorld or NewWorld then
         else            
             if auto == false then
                 wait(.5)
+                FTAK_1x = false
                 FTAK_1Ato = false
                 TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
             end
@@ -3893,6 +3903,7 @@ if not ThreeWorld or NewWorld then
     page2:Toggle("Auto NewWorld", false, function(auto)
         AutoNew = auto
         if auto == false then
+            FTAK_1x = false
             wait(.5)
             TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
         end
@@ -3956,6 +3967,16 @@ end)
 local Tap3 = ui:Taps("Function")
 local page5 = Tap3:newpage()
 page5:Label("Function Auto",0)
+
+Auto_Bone = false
+page5:Toggle("Auto Bone", Auto_Bone, function(p1)
+    Auto_Bone = p1
+    if auto == false then
+        wait(.5)
+        FTAK_1x = false
+        TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+    end
+end)
 
 page5:Toggle("Auto SuperHuman", false, function(p1)
     Superhuman = p1
@@ -4035,7 +4056,7 @@ end)
 
 page6:Line()
 
-page6:Bind("Key Stop TP", Enum.KeyCode.G, function()
+page6:Bind("Stop TP Key", Enum.KeyCode.Home, function()
     tTp = false
     wait(.5)
     TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
@@ -4044,9 +4065,8 @@ end)
 page6:Line()
 
 page6:Toggle("Teleport", false, function(v)
-    if v == true then
-        tTp = true
-    elseif v == false then
+    tTp = v
+    if v == false then
         wait(.5)
         tTp = false
         TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
@@ -4064,16 +4084,38 @@ local TPPlayer = page6:Drop("Select Player", false, Player_name, function(bool)
     Player_Select = bool
 end)
 
+page6:Drop("Select CFrame", false, {30, 60, 120, 200}, function(v)
+    PTPp = v
+end)
+
 page6:Toggle("Teleport Player", false, function(v)
-    if v == true then
-    tTp = true
-    Noclip = true
-    TP(game:GetService("Players"):FindFirstChild(Player_Select).Character.HumanoidRootPart.Position)
-    elseif v == false then
+        PTP = v
+        Noclip = true
+    if v == false then
         wait(.5)
-        tTp = false
         Noclip = false
         TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+    end
+end)
+
+page6:Toggle("Spectate Player", false, function(bool)
+    Sp = bool
+    local plr1 = game.Players.LocalPlayer.Character.Humanoid
+    local plr2 = game.Players:FindFirstChild(Player_Select)
+    repeat wait(.1)
+        game.Workspace.Camera.CameraSubject = plr2.Character.Humanoid
+    until Sp == false 
+    game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+end)
+
+spawn(function()
+    while wait() do
+        if PTP then
+            pcall(function()
+                local p2 = game.Players:FindFirstChild(Player_Select)
+                TP(p2.Character.HumanoidRootPart.CFrame * CFrame.new(0, PTPp, 0))
+            end)
+        end
     end
 end)
 
@@ -4915,7 +4957,7 @@ function checklist5004()
 end]]
 
 spawn(function()
-    while wait() do
+    while wait(.1) do
         pcall(function()
             if atoMoB then
                 if (game:GetService("Workspace").Enemies:FindFirstChild("Head Baker [Lv. 2275]") or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff [Lv. 2250]") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard [Lv. 2225]") or game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter [Lv. 2200]")) then
@@ -4944,6 +4986,37 @@ spawn(function()
             end
         end)
     end
+end)
+
+spawn(function()
+	while wait(.1) do
+		pcall(function()
+			if Auto_Bone then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]") then
+					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+						if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
+							if v:WaitForChild("Humanoid").Health > 0 then
+								repeat game:GetService("RunService").Heartbeat:wait()
+                                    pcall(function()
+                                        v.Humanoid:ChangeState(11)
+                                        v.Head.CanCollide = false
+                                        BoneEv = v.HumanoidRootPart.CFrame
+                                        TP(BoneEv * CFrame.new(0,30,1))
+                                        EquipWeapon(SelectToolWeapon)
+                                        FTAK_1x = true
+                                        MagnetActive2 = true
+                                    end)
+								until Auto_Bone == false or not v.Parent or v.Humanoid.Health <= 0
+							end
+						end
+					end
+				else
+					BoneMagnet = false
+					TP(CFrame.new(-9501.64453, 582.052612, 6034.20117))
+				end
+			end
+		end)
+	end
 end)
 
 spawn(function()
@@ -5024,6 +5097,30 @@ spawn(function()
             end
         end)
     end
+end)
+spawn(function()
+    game:GetService("RunService").Heartbeat:connect(function()
+        pcall(function()
+            for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                if _G.Magnet and MagnetActive then
+                    if Auto_Bone and BoneMagnet then
+                        if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 250 then
+                            pcall(function()
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.CFrame = BoneEv
+                                if v.Humanoid:FindFirstChild("Animator") and MagnetActive then
+                                    sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 1000)
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 300)
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                            end)
+                        end
+                    end
+                end
+            end
+        end)
+    end)
 end)
 
 function tweenTP()
@@ -5162,52 +5259,52 @@ function GetCurrentBlade()
 end
 
 function AttackNoCD() 
-        local Combat = CbFw2.activeController
-        local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
-        local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, hitboxUp)
-        local cac = {}
-        local hash = {}
-        for k, v in pairs(bladehit) do
-            if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
-                table.insert(cac, v.Parent.HumanoidRootPart)
-                hash[v.Parent] = true
-            end
+    local Combat = CbFw2.activeController
+    local riglib = require(game.ReplicatedStorage.CombatFramework.RigLib)
+    local bladehit = riglib.getBladeHits(game.Players.LocalPlayer.Character, {game.Players.LocalPlayer.Character.HumanoidRootPart}, hitboxUp)
+    local cac = {}
+    local hash = {}
+    for k, v in pairs(bladehit) do
+        if v.Parent:FindFirstChild("HumanoidRootPart") and not hash[v.Parent] then
+            table.insert(cac, v.Parent.HumanoidRootPart)
+            hash[v.Parent] = true
         end
-        bladehit = cac
-        if #bladehit > 0 then
-            local u8 = debug.getupvalue(Combat.attack, 5)
-            local u9 = debug.getupvalue(Combat.attack, 6)
-            local u7 = debug.getupvalue(Combat.attack, 4)
-            local u10 = debug.getupvalue(Combat.attack, 7)
-            local u12 = (u8 * 798405 + u7 * 727595) % u9
-            local u13 = u7 * 798405
-                u12 = (u12 * u9 + u13) % 1099511627776
-                u8 = math.floor(u12 / u9)
-                u7 = u12 - u8 * u9
-            u10 = u10 + 1
-            debug.setupvalue(Combat.attack, 5, u8)
-            debug.setupvalue(Combat.attack, 6, u9)
-            debug.setupvalue(Combat.attack, 4, u7)
-            debug.setupvalue(Combat.attack, 7, u10)
-            pcall(function()
-                for i,v in pairs(Combat.animator.anims.basic) do
-                    v:Play()
-                end
-            end)
-            if Combat.blades and Combat.blades[1] then 
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
-                game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
-                game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "") 
+    end
+    bladehit = cac
+    if #bladehit > 0 then
+        local u8 = debug.getupvalue(Combat.attack, 5)
+        local u9 = debug.getupvalue(Combat.attack, 6)
+        local u7 = debug.getupvalue(Combat.attack, 4)
+        local u10 = debug.getupvalue(Combat.attack, 7)
+        local u12 = (u8 * 798405 + u7 * 727595) % u9
+        local u13 = u7 * 798405
+        u12 = (u12 * u9 + u13) % 1099511627776
+        u8 = math.floor(u12 / u9)
+        u7 = u12 - u8 * u9
+        u10 = u10 + 1
+        debug.setupvalue(Combat.attack, 5, u8)
+        debug.setupvalue(Combat.attack, 6, u9)
+        debug.setupvalue(Combat.attack, 4, u7)
+        debug.setupvalue(Combat.attack, 7, u10)
+        pcall(function()
+            for i,v in pairs(Combat.animator.anims.basic) do
+                v:Play()
             end
+        end)
+        if Combat.blades and Combat.blades[1] then 
+            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("weaponChange",tostring(GetCurrentBlade()))
+            game.ReplicatedStorage.Remotes.Validator:FireServer(math.floor(u12 / 1099511627776 * 16777215), u10)
+            game:GetService("ReplicatedStorage").RigControllerEvent:FireServer("hit", bladehit, i, "") 
         end
+    end
 end
 
 plrgetm.Button1Down:Connect(function()
-    if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+    if getgenv().Fastattack == false and SF015 == false and FTAK_1x == false then
         pcall(function()
             CbFw2.activeController.increment = 4
             CbFw2.activeController.hitboxMagnitude = hitboxUp
-	    CbFw2.activeController.timeToNextAttack = 0
+            CbFw2.activeController.timeToNextAttack = tick() -1
             AttackNoCD()
         end)
     end
@@ -5216,22 +5313,76 @@ end)
 spawn(function()
     while wait(wat) do
         pcall(function()
+            if getgenv().Fastattack then
+                if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+                    pcall(function()
+                        CbFw2.activeController.increment = 3
+                        CbFw2.activeController.hitboxMagnitude = hitboxUp
+                        CbFw2.activeController.timeToNextAttack = 1
+                        (function()
+                            AttackNoCD()
+                        end)()
+                    end)
+                end
+            end
+        end)
+    end
+end)
+
+local Client = game.Players.LocalPlayer
+local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
+local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+
+if not shared.orl then
+    shared.orl = STOPRL.wrapAttackAnimationAsync
+end
+
+if not shared.cpc then
+    shared.cpc = STOP.play 
+end
+
+spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+            local Hits = STOPRL.getBladeHits(b,c,d)
+            if stayattack and Hits then
+                STOP.play = function() 
+                end
+                a:Play(0.01,0.01,0.01)
+                func(Hits)
+                STOP.play = shared.cpc
+                wait(a.length * 0.5)
+                a:Stop()
+            end
+        end
+    end)
+end)
+
+spawn(function()
+     while wait(wat) do
+        pcall(function()
             CSR:Stop()
             if SF015 or FTAK_1x and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
             	CbFw2.activeController.increment = 4
             	CbFw2.activeController.hitboxMagnitude = hitboxUp
-            	CbFw2.activeController.timeToNextAttack = 0
+            	CbFw2.activeController.timeToNextAttack = tick() -1
             	CbFw2.activeController.attacking = false
             	CbFw2.activeController.blocking = false
             	game.Players.LocalPlayer.Character.Humanoid.Sit = false
             	game.Players.LocalPlayer.Character.Stun.Value = 0
                 (function()
-                    CbFw2.activeController:attack()
+                    repeat game:GetService("RunService").Heartbeat:wait()
+                        for i = 2,5 do
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670))
+                        end
+                    until game.Players
                 end)()
             elseif Auto_Farm == false and FTAK_1x == true or FTAK_1Ato == true then
                 FTAK_1x = false
             end
         end)
+    game:GetService("RunService").Heartbeat:wait()
     end
 end)
 
@@ -5382,7 +5533,7 @@ end)
 spawn(function()
     pcall(function()
         while task.wait() do
-            if tTp or atoMoB or Auto_Farm then
+            if tTp or Noclip or atoMoB or Auto_Farm then
                 if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                     local BodyV = Instance.new("BodyVelocity")
                     BodyV.Name = "BodyClip"
@@ -5400,7 +5551,7 @@ spawn(function()
 end)
 
 game:GetService("RunService").Stepped:Connect(function()
-    if tTp or atoMoB or Auto_Farm then
+    if tTp or Noclip or atoMoB or Auto_Farm then
         for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.CanCollide = false    
