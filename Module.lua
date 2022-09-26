@@ -3642,10 +3642,6 @@ end
 
 wait(1)
 
-pcall(function()
-    create:Notifile("LocalScript","Script Has Started",10)
-end)
-
 Wapon = {}
 for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do  
     if v:IsA("Tool") then
@@ -3684,10 +3680,48 @@ local page1 = Tap1:newpage()
 
 page1:Label("Function Reset",0)
 
+page1:Button("Reset System All", function()
+    pcall(function()
+    create:Notifile("System", "Please Wait", 5)
+    wait(.5)
+    create:Notifile("System", "Anchored = false", 2)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    wait(.5)
+    create:Notifile("System", "Break Character", 2)
+    game.Players.LocalPlayer.Character:BreakJoints()
+    wait(.5)
+    create:Notifile("System", "Reset Tween", 2)
+    TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
+    wait(.5)
+    create:Notifile("System", "Please wait. All systems are shutting down.", 5)
+    wait(.5)
+    Reset()
+    end)
+end)
+
+function Reset(s)
+    getgenv().Fastattack = false
+    SF015 = false
+    FTAK_1x = false
+    wait(.1)
+    tTp = false
+    PTP = false
+    PTPp = 30
+    wait(.1)
+    Noclip = false
+    Player_Select = nil
+    atoMoB = false
+    AutoReMob = false
+    _G.SetSpawn = false
+    _G.Magnet = false
+    AutoHaki = false
+    Auto_Farm = false
+end
+
+page1:Line()
+
 page1:Button("Reset Character", function()
-    game.Players.LocalPlayer.Character.Humanoid.Health = 0
-    game.Players.LocalPlayer.Character.Humanoid:SetStateEnabled(15, true)
-    game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(15)
+    game.Players.LocalPlayer.Character:BreakJoints()
 end)
 
 page1:Button("Reset Movement", function()
@@ -3724,6 +3758,79 @@ page1:Button("Redeem Code 2xExp", function()
 end)
 
 page1:Label("Set Fps Setting",0)
+
+function BeautifulMode()
+	_G.LightMode = true
+	if game:GetService("Lighting"):FindFirstChild("BloomEffect") then
+		game:GetService("Lighting"):FindFirstChild("BloomEffect"):Destroy()
+	end
+	if game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect") then
+		game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect"):Destroy()
+	end
+	if game:GetService("Lighting"):FindFirstChild("DepthOfFieldEffect") then
+		game:GetService("Lighting"):FindFirstChild("DepthOfFieldEffect"):Destroy()
+	end
+	if game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect") then
+		game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect"):Destroy()
+	end
+	if game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect2") then
+		game:GetService("Lighting"):FindFirstChild("ColorCorrectionEffect2"):Destroy()
+	end
+	if game:GetService("Lighting"):FindFirstChild("SunRaysEffect") then
+		game:GetService("Lighting"):FindFirstChild("SunRaysEffect"):Destroy()
+	end
+	local a = game.Lighting
+	a.Ambient = Color3.fromRGB(31, 31, 31)
+	a.Brightness = 0.7
+	a.ColorShift_Bottom = Color3.fromRGB(255, 255, 255)
+	a.ColorShift_Top = Color3.fromRGB(255, 102, 31)
+	a.EnvironmentDiffuseScale = 0.205
+	a.EnvironmentSpecularScale = 0.522
+	a.GlobalShadows = true
+	a.OutdoorAmbient = Color3.fromRGB(67, 67, 67)
+	a.ShadowSoftness = 0.5
+	a.GeographicLatitude = -15.525
+	a.ExposureCompensation = 0.75
+	local b = Instance.new("BloomEffect", a)
+	b.Name = "BloomEffect"
+	b.Enabled = true
+	b.Intensity = 0.04
+	b.Size = 1900
+	b.Threshold = 0.915
+	local c = Instance.new("ColorCorrectionEffect", a)
+	c.Name = "ColorCorrectionEffect"
+	c.Brightness = 0.176
+	c.Contrast = 0.39
+	c.Enabled = true
+	c.Saturation = 0.2
+	c.TintColor = Color3.fromRGB(255, 227, 128)
+	local d = Instance.new("DepthOfFieldEffect", a)
+	d.Name = "DepthOfFieldEffect"
+	d.Enabled = true
+	d.FarIntensity = 0.077
+	d.FocusDistance = 21.54
+	d.InFocusRadius = 20.77
+	d.NearIntensity = 0.277
+	local e = Instance.new("ColorCorrectionEffect", a)
+	e.Name = "ColorCorrectionEffect"
+	e.Brightness = 0.3
+	e.Contrast = -0.07
+	e.Saturation = 0
+	e.Enabled = true
+	e.TintColor = Color3.fromRGB(255, 247, 239)
+	local e2 = Instance.new("ColorCorrectionEffect", a)
+	e2.Name = "ColorCorrectionEffect2"
+	e2.Brightness = 0.1
+	e2.Contrast = 0.45
+	e2.Saturation = -0.1
+	e2.Enabled = true
+	e2.TintColor = Color3.fromRGB(167, 167, 167)
+	local s = Instance.new("SunRaysEffect", a)
+	s.Name = "SunRaysEffect"
+	s.Enabled = true
+	s.Intensity = 0.01
+	s.Spread = 0.146
+end
 
 page1:Button("Fps Boost", function()
    	local decalsyeeted = true
@@ -3763,6 +3870,10 @@ page1:Button("Fps Boost", function()
             e.Enabled = false
         end
     end
+end)
+
+page1:Button("Beautiful Mode", function()
+    BeautifulMode()
 end)
 
 page1:Button("SetFps ( Unlock )", function()
@@ -3840,7 +3951,6 @@ page2:Toggle("Auto Kaiton", false, function(auto)
 	if _G.AutoKaiton and SelectToolWeapon == nil then
         create:Notifile("Kaiton","Select Weapon plsss",5)
     else
-        AutoReMob = false
         _G.SetSpawn = auto
         _G.Magnet = auto
         AutoHaki = auto
@@ -3851,7 +3961,6 @@ page2:Toggle("Auto Kaiton", false, function(auto)
         if auto == false then
             wait(0.5)
             FTAK_1x = false
-            AutoReMob = true
             TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
         end
     end
@@ -3883,18 +3992,16 @@ if ThreeWorld or NewWorld then
         if a1 and SelectToolWeapon == nil then
             create:Notifile("Farm","Select Weapon",5)
         else            
+            TP(CFrame.new(-1927.83056640625, 38.360443115234375, -12842.0908203125))
+            _G.Magnet = auto
+            AutoHaki = auto 
+            atoMoB = auto
             if auto == false then
                 wait(.5)
                 FTAK_1x = false
                 FTAK_1Ato = false
                 TP(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
             end
-            if auto == true then
-                TP(CFrame.new(-1927.83056640625, 38.360443115234375, -12842.0908203125))
-            end
-            _G.Magnet = auto
-            AutoHaki = auto 
-            atoMoB = auto
         end
     end)
 end
@@ -3971,6 +4078,8 @@ page5:Label("Function Auto",0)
 Auto_Bone = false
 page5:Toggle("Auto Bone", Auto_Bone, function(p1)
     Auto_Bone = p1
+    _G.Magnet = p1
+    AutoHaki = p1
     if auto == false then
         wait(.5)
         FTAK_1x = false
@@ -3978,8 +4087,16 @@ page5:Toggle("Auto Bone", Auto_Bone, function(p1)
     end
 end)
 
+page5:Toggle("Auto Scrap Metal", false, function(p1)
+    Auto_Give_Scrap_Metal = p1
+end)
+
 page5:Toggle("Auto SuperHuman", false, function(p1)
     Superhuman = p1
+end)
+
+page5:Toggle("AutoBuySurprise", false, function(p1)
+    AutoBuySurprise = p1
 end)
 
 page5:Toggle("Auto DeathStep", false, function(p1)
@@ -4076,8 +4193,10 @@ end)
 page6:Line()
 
 Player_name = {}
-for i,v in pairs(game.Players:GetChildren()) do  
-    table.insert(Player_name ,v.Name)
+for i,v in pairs(game.Players:GetChildren()) do
+    if v.Name ~= game.Players.LocalPlayer.Name then
+        table.insert(Player_name ,v.Name)
+    end
 end
 
 local TPPlayer = page6:Drop("Select Player", false, Player_name, function(bool)
@@ -4119,12 +4238,6 @@ spawn(function()
     end
 end)
 
-spawn(function()
-    while wait(1) do
-        print("No.1 Fastattack")
-    end
-end)
-
 page6:Button("Refresh Player", function()
     Player_name = {}
     TPPlayer:Clear()
@@ -4135,10 +4248,55 @@ page6:Button("Refresh Player", function()
     end
 end)
 
+page6:Toggle("Aimbot Skill", false, function(vu)
+	AimSkillNearest = vu
+end)
+
+--[[spawn(function()
+	while wait() do
+		pcall(function()
+			local MaxDistance = 500
+			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+				if v.Name ~= game.Players.LocalPlayer.Name then
+					local Distance = v:DistanceFromCharacter(game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
+					if Distance < MaxDistance then
+						MaxDistance = Distance
+						TargetPlayerAim = v.Name
+					end
+				end
+			end
+		end)
+	end
+end)]]
+
+spawn(function()
+	pcall(function()
+		game:GetService("RunService").Stepped:connect(function()
+            pcall(function()
+                if AimSkillNearest and Player_Select ~= nil and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and game.Players.LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name]:FindFirstChild("MousePos") then
+                    local args = {
+                        [1] = game:GetService("Players"):FindFirstChild(Player_Select).Character.HumanoidRootPart.Position
+                    }
+                    game:GetService("Players").LocalPlayer.Character[game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                end
+            end)
+		end)
+	end)
+end)
+
 local Tap4 = ui:Taps("Store")
 local page7 = Tap4:newpage()
 page7:Label("Function Buy",0)
 
+page7:Button("Refund Stat [2500 F]", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
+end)
+
+page7:Button("Reroll Race [3000 F]", function()
+	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+end)
 page7:Button("Buy Random Devil Fruit", function()
     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
 end)
@@ -4850,9 +5008,6 @@ if OldWorld then
                                 pcall(function()
                                     EquipWeapon(SelectToolWeapon)
                                     TP(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0))
-                                    v.HumanoidRootPart.CanCollide = false
-                                    v.HumanoidRootPart.Anchored = false
-                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
                                     FTAK_1x = true
                                     sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
                                     if v.Humanoid:FindFirstChild("Animator") then
@@ -4969,7 +5124,7 @@ spawn(function()
                                         v.Humanoid:ChangeState(11)
                                         v.Head.CanCollide = false
                                         Ato500 = v.HumanoidRootPart.CFrame
-                                        TP(Ato500 * CFrame.new(0,30,1))
+                                        TP(Ato500 * CFrame.new(0,0,20))
                                         EquipWeapon(SelectToolWeapon)
                                         FTAK_1x = true
                                         MagnetActive = true
@@ -4988,20 +5143,52 @@ spawn(function()
     end
 end)
 
+Tp_Scrap_Metal2 = CFrame.new(-1139.2738037109375, 94.07817077636719, 4318.9150390625)
+
+spawn(function()
+	while wait(.1) do
+		pcall(function()
+			if Auto_Give_Scrap_Metal then
+				if game:GetService("Workspace").Enemies:FindFirstChild("Brute [Lv. 45]") then
+					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+						if v.Name == "Brute [Lv. 45]" then
+							if v:WaitForChild("Humanoid") and v.Humanoid.Health > 0 then
+								repeat game:GetService("RunService").Heartbeat:wait()
+                                    pcall(function()
+                                        v.Humanoid:ChangeState(11)
+                                        v.Head.CanCollide = false
+                                        TP(Tp_Scrap_Metal2 * CFrame.new(0,0,20))
+                                        EquipWeapon(SelectToolWeapon)
+                                        FTAK_1x = true
+                                        MagnetActive3 = true
+                                    end)
+								until Auto_Give_Scrap_Metal == false or not v.Parent or v.Humanoid.Health <= 0
+							end
+						end
+					end
+				else
+                    FTAK_1x = false
+                    MagnetActive3 = false
+				end
+			end
+		end)
+	end
+end)
+
 spawn(function()
 	while wait(.1) do
 		pcall(function()
 			if Auto_Bone then
-				if game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]") then
+				if (game:GetService("Workspace").Enemies:FindFirstChild("Reborn Skeleton [Lv. 1975]") or game:GetService("Workspace").Enemies:FindFirstChild("Living Zombie [Lv. 2000]") or game:GetService("Workspace").Enemies:FindFirstChild("Domenic Soul [Lv. 2025]") or game:GetService("Workspace").Enemies:FindFirstChild("Posessed Mummy [Lv. 2050]")) then
 					for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-						if v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]" then
-							if v:WaitForChild("Humanoid").Health > 0 then
+						if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") then
+							if v:WaitForChild("Humanoid") and v.Humanoid.Health > 0 then
 								repeat game:GetService("RunService").Heartbeat:wait()
                                     pcall(function()
                                         v.Humanoid:ChangeState(11)
                                         v.Head.CanCollide = false
                                         BoneEv = v.HumanoidRootPart.CFrame
-                                        TP(BoneEv * CFrame.new(0,30,1))
+                                        TP(BoneEv * CFrame.new(0,0,20))
                                         EquipWeapon(SelectToolWeapon)
                                         FTAK_1x = true
                                         MagnetActive2 = true
@@ -5011,7 +5198,8 @@ spawn(function()
 						end
 					end
 				else
-					BoneMagnet = false
+                    FTAK_1x = false
+					MagnetActive2 = false
 					TP(CFrame.new(-9501.64453, 582.052612, 6034.20117))
 				end
 			end
@@ -5035,6 +5223,14 @@ spawn(function()
             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
         end
     end
+end)
+
+spawn(function()
+	while wait(.1) do
+		if AutoBuySurprise then
+			game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones","Buy",1,1)
+		end
+	end
 end)
 
 spawn(function()
@@ -5073,20 +5269,45 @@ spawn(function()
 end)
 
 spawn(function()
+    game:GetService("RunService").Heartbeat:connect(function()
+        pcall(function()
+            for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
+                if Auto_Give_Scrap_Metal and MagnetActive3 then
+                    if v.Name == "Brute [Lv. 45]" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - Tp_Scrap_Metal2.Position).Magnitude <= 400 then
+                            pcall(function()
+                                v.Head.CanCollide = false
+                                v.HumanoidRootPart.CanCollide = false
+                                v.HumanoidRootPart.CFrame = Tp_Scrap_Metal2
+                                if v.Humanoid:FindFirstChild("Animator") and MagnetActive3 then
+                                    sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 1000)
+                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 400)
+                                    v.Humanoid.Animator:Destroy()
+                                end
+                            end)
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+
+spawn(function()
     while wait(1) do
         pcall(function()
             for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
                 if _G.Magnet and MagnetActive then
                     if atoMoB and MagnetActive then
                         if (v.Name == "Head Baker [Lv. 2275]" or v.Name == "Baking Staff [Lv. 2250]" or v.Name == "Cake Guard [Lv. 2225]" or v.Name == "Cookie Crafter [Lv. 2200]") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-                            if (v.HumanoidRootPart.Position - Ato500.Position).Magnitude <= 300 then
+                            if (v.HumanoidRootPart.Position - Ato500.Position).Magnitude <= 400 then
                                 pcall(function()
                                     v.Head.CanCollide = false
                                     v.HumanoidRootPart.CanCollide = false
                                     v.HumanoidRootPart.CFrame = Ato500
                                     if v.Humanoid:FindFirstChild("Animator") and MagnetActive then
                                         sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 1000)
-                                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 300)
+                                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 400)
                                         v.Humanoid.Animator:Destroy()
                                     end
                                 end)
@@ -5098,29 +5319,28 @@ spawn(function()
         end)
     end
 end)
+
 spawn(function()
-    game:GetService("RunService").Heartbeat:connect(function()
+    while wait(.5) do
         pcall(function()
             for _,v in pairs(game.Workspace.Enemies:GetChildren()) do
-                if _G.Magnet and MagnetActive then
-                    if Auto_Bone and BoneMagnet then
-                        if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - MainMonBone.Position).Magnitude <= 250 then
-                            pcall(function()
-                                v.Head.CanCollide = false
-                                v.HumanoidRootPart.CanCollide = false
-                                v.HumanoidRootPart.CFrame = BoneEv
-                                if v.Humanoid:FindFirstChild("Animator") and MagnetActive then
-                                    sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 1000)
-                                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 300)
-                                    v.Humanoid.Animator:Destroy()
-                                end
-                            end)
-                        end
+                if Auto_Bone and MagnetActive2 then
+                    if (v.Name == "Reborn Skeleton [Lv. 1975]" or v.Name == "Living Zombie [Lv. 2000]" or v.Name == "Demonic Soul [Lv. 2025]" or v.Name == "Posessed Mummy [Lv. 2050]") and (v.HumanoidRootPart.Position - BoneEv.Position).Magnitude <= 300 then
+                        pcall(function()
+                            v.Head.CanCollide = false
+                            v.HumanoidRootPart.CanCollide = false
+                            v.HumanoidRootPart.CFrame = BoneEv
+                            if v.Humanoid:FindFirstChild("Animator") and MagnetActive2 then
+                                sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 1000)
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 300)
+                                v.Humanoid.Animator:Destroy()
+                            end
+                        end)
                     end
                 end
             end
         end)
-    end)
+    end
 end)
 
 function tweenTP()
@@ -5345,9 +5565,8 @@ spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
             local Hits = STOPRL.getBladeHits(b,c,d)
-            if stayattack and Hits then
-                STOP.play = function() 
-                end
+            if Hits then
+                STOP.play = function() end
                 a:Play(0.01,0.01,0.01)
                 func(Hits)
                 STOP.play = shared.cpc
@@ -5359,30 +5578,32 @@ spawn(function()
 end)
 
 spawn(function()
-     while wait(wat) do
+     while true do wait(wat)
         pcall(function()
             CSR:Stop()
             if SF015 or FTAK_1x and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
             	CbFw2.activeController.increment = 4
             	CbFw2.activeController.hitboxMagnitude = hitboxUp
-            	CbFw2.activeController.timeToNextAttack = tick() -1
+            	CbFw2.activeController.timeToNextAttack = tick()
             	CbFw2.activeController.attacking = false
             	CbFw2.activeController.blocking = false
             	game.Players.LocalPlayer.Character.Humanoid.Sit = false
             	game.Players.LocalPlayer.Character.Stun.Value = 0
                 (function()
                     repeat game:GetService("RunService").Heartbeat:wait()
-                        for i = 2,5 do
-                            game:GetService("VirtualUser"):CaptureController()
-                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 670))
+                        for i = 1,2,1 do 
+                            spawn(function()
+                                game:GetService("VirtualUser"):CaptureController()
+                                game:GetService("VirtualUser"):ClickButton1(Vector2.new(1300,760),workspace.CurrentCamera.CFrame)
+                            end)
                         end
-                    until game.Players
+                    game:GetService("RunService").Heartbeat:wait()
+                    until Auto_Bone == false or atoMoB == false or Auto_Farm == false or FTAK_1x == false
                 end)()
-            elseif Auto_Farm == false and FTAK_1x == true or FTAK_1Ato == true then
+            elseif Auto_Bone == false or atoMoB == false or Auto_Farm == false and FTAK_1x == true then
                 FTAK_1x = false
             end
         end)
-    game:GetService("RunService").Heartbeat:wait()
     end
 end)
 
@@ -5533,7 +5754,7 @@ end)
 spawn(function()
     pcall(function()
         while task.wait() do
-            if tTp or Noclip or atoMoB or Auto_Farm then
+            if tTp or Auto_Give_Scrap_Metal or Auto_Bone or Noclip or atoMoB or Auto_Farm then
                 if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
                     local BodyV = Instance.new("BodyVelocity")
                     BodyV.Name = "BodyClip"
@@ -5551,7 +5772,7 @@ spawn(function()
 end)
 
 game:GetService("RunService").Stepped:Connect(function()
-    if tTp or Noclip or atoMoB or Auto_Farm then
+    if tTp or Auto_Give_Scrap_Metal or Auto_Bone or Noclip or atoMoB or Auto_Farm then
         for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
             if v:IsA("BasePart") then
                 v.CanCollide = false    
