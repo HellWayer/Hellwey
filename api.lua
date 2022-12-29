@@ -240,7 +240,7 @@ spawn(function()
         game.CoreGui.ChildAdded:connect(function(p1)
         	if p1:FindFirstChild("PropertiesFrame") or p1:FindFirstChild("ExplorerPanel") or p1:FindFirstChild("SaveInstance") then
                 game.Players.LocalPlayer:Kick("\n\nAnti Dark Dex\n")
-                local url = "https://discord.com/api/webhooks/" .. Crl .. "/" .. token
+                local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
                 local data = {
                     ["content"] = "",
                     ["embeds"] = {
@@ -265,7 +265,7 @@ end)
 game.CoreGui.ChildAdded:connect(function(q)
     game.RunService.RenderStepped:connect(function()
         if q.Name == "UI LIB" or q.Name == "spyu" then
-            local url = "https://discord.com/api/webhooks/" .. Crl .. "/" .. token
+            local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
             local data = {
                 ["content"] = "",
                 ["embeds"] = {
@@ -292,7 +292,7 @@ UIS.InputBegan:Connect(function(Input)
     if Input.KeyCode == Enum.KeyCode.Insert then
         keydown = true
         game.Players.localPlayer:Kick("\n\nAnti Console Synapse X\n")
-        local url = "https://discord.com/api/webhooks/" .. Crl .. "/" .. token
+        local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
         local data = {
             ["content"] = "",
             ["embeds"] = {
@@ -315,7 +315,7 @@ end)
 
 local a = {}
 
-    local url = "https://discord.com/api/webhooks/" .. Crl .. "/" .. token
+    local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
     local data = {
         ["content"] = "",
         ["embeds"] = {
@@ -346,7 +346,7 @@ local a = {}
                     if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
                         while true do end
                     end
-                    local url = "https://discord.com/api/webhooks/" .. Crl .. "/" .. token
+                    local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
                     local data = {
                         ["content"] = "",
                         ["embeds"] = {
@@ -364,7 +364,7 @@ local a = {}
                     request(serversdata)
                 else
                     print("Wrong Connect API") --Wrong Connection
-                    local url = "https://discord.com/api/webhooks/" .. urlCrl .. "/" .. token
+                    local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
                     local data = {
                         ["content"] = "",
                         ["embeds"] = {
