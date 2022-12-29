@@ -1,3 +1,4 @@
+
 --[[
 
     ██╗░░░░░░█████╗░░█████╗░██╗░░██╗███████╗██████╗░  ██╗░░██╗██╗░░░██╗██████╗░
@@ -339,7 +340,7 @@ local a = {}
 
         if true or false then
             function Admin()
-                if Key == "A657811A48L148E38919_IT" then
+                if Key == "IT_LOCKER_HUB_8987_GIRO_6975_MFIF" then
                     print("Connect API") --Connection
                     if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
                         while true do end
