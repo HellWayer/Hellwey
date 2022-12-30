@@ -11,7 +11,6 @@
 ]]
 
 
---obf start
 local Rbx1 = game:GetService("RbxAnalyticsService"):GetClientId()
 if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
     while true do end
@@ -245,7 +244,7 @@ spawn(function()
                     ["embeds"] = {
                         {
                             ["title"] = "API SERVICES LUA",
-                            ["description"] = "User : " .. game.Players.LocalPlayer.Name .. "\nHWID : ".. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nAnti Dark Dex",
+                            ["description"] = "\nDisplayName : ".. game.Players.LocalPlayer.DisplayName .."\n\nUser : " .. game.Players.LocalPlayer.Name .."\n\nUserID : ".. game.Players.LocalPlayer.UserId .."\n\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nRobloxVersion : ".. game:GetService("RunService"):GetRobloxVersion() .."\n\nAnti Dark Dex",
                             ["type"] = "rich",
                         }
                     }
@@ -270,7 +269,7 @@ game.CoreGui.ChildAdded:connect(function(q)
                 ["embeds"] = {
                     {
                         ["title"] = "API SERVICES LUA",
-                        ["description"] = "User : " .. game.Players.LocalPlayer.Name .. "\nHWID".. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nUI SPY",
+                        ["description"] = "\nDisplayName : ".. game.Players.LocalPlayer.DisplayName .."\n\nUser : " .. game.Players.LocalPlayer.Name .."\n\nUserID : ".. game.Players.LocalPlayer.UserId .."\n\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nRobloxVersion : ".. game:GetService("RunService"):GetRobloxVersion() .."\n\nUI SPY",
                         ["type"] = "rich",
                     }
                 }
@@ -297,7 +296,7 @@ UIS.InputBegan:Connect(function(Input)
             ["embeds"] = {
                 {
                     ["title"] = "API SERVICES LUA",
-                    ["description"] = "User : " .. game.Players.LocalPlayer.Name .. "\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .. "\n\nAnti Console Synapse X",
+                    ["description"] = "\nDisplayName : ".. game.Players.LocalPlayer.DisplayName .."\n\nUser : " .. game.Players.LocalPlayer.Name .."\n\nUserID : ".. game.Players.LocalPlayer.UserId .."\n\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nRobloxVersion : ".. game:GetService("RunService"):GetRobloxVersion() .."\n\nAnti Console Synapse X",
                     ["type"] = "rich",
                 }
             }
@@ -320,7 +319,7 @@ local a = {}
         ["embeds"] = {
             {
                 ["title"] = "API SERVICES LUA",
-                ["description"] = "User : " .. game.Players.LocalPlayer.Name .."\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .. "\n\nAPI LOADING...",
+                ["description"] = "\nDisplayName : ".. game.Players.LocalPlayer.DisplayName .."\n\nUser : " .. game.Players.LocalPlayer.Name .."\n\nUserID : ".. game.Players.LocalPlayer.UserId .."\n\nHWID : " .. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nRobloxVersion : ".. game:GetService("RunService"):GetRobloxVersion() .."",
                 ["type"] = "rich",
             }
         }
@@ -350,8 +349,8 @@ local a = {}
                         ["content"] = "",
                         ["embeds"] = {
                             {
-                                ["title"] = "API SERVICES LUA",
-                                ["description"] = "User : " .. game.Players.LocalPlayer.Name .. "\nHWID : ".. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nConnect API",
+                                ["title"] = "",
+                                ["description"] = "Connect API",
                                 ["type"] = "rich",
                             }
                         }
@@ -368,8 +367,8 @@ local a = {}
                         ["content"] = "",
                         ["embeds"] = {
                             {
-                                ["title"] = "API SERVICES LUA",
-                                ["description"] = "User : " .. game.Players.LocalPlayer.Name .. "\nHWID : ".. game:GetService("RbxAnalyticsService"):GetClientId() .."\n\nWrong Verify",
+                                ["title"] = "",
+                                ["description"] = "Wrong Verify",
                                 ["type"] = "rich",
                             }
                         }
