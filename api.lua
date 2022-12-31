@@ -1,4 +1,3 @@
-
 --[[
 
     ██╗░░░░░░█████╗░░█████╗░██╗░░██╗███████╗██████╗░  ██╗░░██╗██╗░░░██╗██████╗░
@@ -10,6 +9,11 @@
 
 ]]
 
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Locker Application", 
+    Text = "\nWait API",
+    Duration = 5
+})
 
 local Rbx1 = game:GetService("RbxAnalyticsService"):GetClientId()
 if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
@@ -233,6 +237,14 @@ getgenv().setclipboard = function(...)
 	end
 end
 
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Locker Application", 
+    Text = "\nAPI : Check Dark Dex",
+    Duration = 5
+})
+
+wait(1)
+
 spawn(function()
     game:GetService("RunService").RenderStepped:connect(function()
         game.CoreGui.ChildAdded:connect(function(p1)
@@ -254,11 +266,20 @@ spawn(function()
                 local request = http_request or request or HttpPost or syn.request
                 local serversdata = {Url = url, Body = data, Method = "POST", Headers = header}
                 request(serversdata)
-        		while true do end
+                wait(.1)
+        		game:Shutdown()
         	end
         end)
     end)
 end)
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Locker Application", 
+    Text = "\nAPI : Check UI",
+    Duration = 5
+})
+
+wait(1)
 
 game.CoreGui.ChildAdded:connect(function(q)
     game.RunService.RenderStepped:connect(function()
@@ -279,10 +300,19 @@ game.CoreGui.ChildAdded:connect(function(q)
             local request = http_request or request or HttpPost or syn.request
             local serversdata = {Url = url, Body = data, Method = "POST", Headers = header}
             request(serversdata)
-            while true do end
+            wait(.1)
+            game:Shutdown()
         end
     end)
 end)
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Locker Application", 
+    Text = "\nAPI : Check Console Synapse X",
+    Duration = 1
+})
+
+wait(1)
 
 local UIS = game:GetService("UserInputService")
 local keydown = false
@@ -306,14 +336,19 @@ UIS.InputBegan:Connect(function(Input)
         local request = http_request or request or HttpPost or syn.request
         local serversdata = {Url = url, Body = data, Method = "POST", Headers = header}
         request(serversdata)
-        while true do
-        end
+        wait(.1)
+        game:Shutdown()
     end
 end)
+
 
 local a = {}
 
     local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
+    local GameTime = math.floor(workspace.DistributedGameTime+0.5)
+    local Hour = math.floor(GameTime/(60^2))%24
+    local Minute = math.floor(GameTime/(60^1))%60
+    local Second = math.floor(GameTime/(60^0))%60
     local data = {
         ["content"] = "",
         ["embeds"] = {
@@ -331,19 +366,19 @@ local a = {}
 	local ts = game:GetService("TeleportService")
 	local p = game:GetService("Players").LocalPlayer
 	local Key = getgenv().Key
-    if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
-        while true do end
-    end
     request(serversdata)
-    wait(10)
 
-        if true or false then
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Locker Application", 
+        Text = "\nAPI : Send Information",
+        Duration = 1
+    })
+
+    wait(.5)
+        if true or false then               
+            wait(.1)
             function Admin()
-                if Key == "IT_LOCKER_HUB_8987_GIRO_6975_MFIF" then
-                    print("Connect API") --Connection
-                    if game:GetService("RbxAnalyticsService"):GetClientId() ~= Rbx1 then
-                        while true do end
-                    end
+                if Key == "IT_LOCKER_HUB" then
                     local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
                     local data = {
                         ["content"] = "",
@@ -360,8 +395,12 @@ local a = {}
                     local request = http_request or request or HttpPost or syn.request
                     local serversdata = {Url = url, Body = data, Method = "POST", Headers = header}
                     request(serversdata)
+                    game.StarterGui:SetCore("SendNotification", {
+                        Title = "Locker Application", 
+                        Text = "\nAPI : Check WhiteList",
+                        Duration = 1
+                    })
                 else
-                    print("Wrong Connect API") --Wrong Connection
                     local url = "https://discord.com/api/webhooks/" .. Id .. "/" .. token
                     local data = {
                         ["content"] = "",
@@ -378,15 +417,33 @@ local a = {}
                     local request = http_request or request or HttpPost or syn.request
                     local serversdata = {Url = url, Body = data, Method = "POST", Headers = header}
                     request(serversdata)
-
-                    ts:Teleport(game.PlaceId, p)
-                    task.wait()
+                    wait(.1)
                     game:Shutdown()
                 end
             end
         end
-
     Admin()
-
+    TimeWait = math.random(0,2)
+    wait(TimeWait)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Locker Application", 
+        Text = "\nAPI : Check HWID",
+        Duration = 1
+    })
+    wait(1.5)  
+    spawn(function()
+        while task.wait() do
+            pcall(function()
+                if game:GetService("RbxAnalyticsService"):GetClientId() == Rbx1 then else
+                    game:Shutdown()
+                end
+            end)
+        end
+    end)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Locker Application", 
+        Text = "\nWorking API",
+        Duration = 1
+    })
 return a;
 --obf end
